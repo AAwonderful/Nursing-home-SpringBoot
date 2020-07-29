@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lijie.bs_healthy.mapper.FoodInfoMapper">
+    <select id="selAll" parameterType="com.lijie.bs_healthy.model.FoodInfo" resultType="com.lijie.bs_healthy.model.FoodInfo">
+        select * from food
+        <where>
+            <if test="foodtype!='' and foodtype!=null">
+                and foodtype=#{foodtype}
+            </if>
+            <if test="foodlable!='' and foodlable!=null">
+                and foodlable like concat('%',#{foodlable},'%')
+            </if>
+            <if test="price!='' and price!=null">
+                and price <![CDATA[ <= ]]> #{price}
+            </if>
+            <if test="ishalal!='' and ishalal!=null">
+                and ishalal=#{ishalal}
+            </if>
+            <if test="foodname!='' and foodname!=null">
+                and foodname like concat(#{foodname},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selById" parameterType="int" resultType="com.lijie.bs_healthy.model.FoodInfo">
+        select *from food where foodid=#{foodid}
+    </select>
+
+    <insert id="add" parameterType="com.lijie.bs_healthy.model.FoodInfo">
+        insert into food(foodname,foodtype,foodlable,price,ishalal)
+         values (#{foodname},#{foodtype},#{foodlable},#{price},#{ishalal})
+    </insert>
+
+    <update id="update" parameterType="com.lijie.bs_healthy.model.FoodInfo">
+        update food set foodname=#{foodname},foodtype=#{foodtype},foodlable=#{foodlable},price=#{price},ishalal=#{ishalal}
+        where foodid=#{foodid}
+    </update>
+
+    <delete id="del" parameterType="int">
+        delete from food where foodid=#{foodid}
+    </delete>
+</mapper>

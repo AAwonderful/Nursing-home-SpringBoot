@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lijie.bs_healthy.mapper.HuliInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lijie.bs_healthy.model.HuliInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="work_number" jdbcType="VARCHAR" property="workNumber" />
+    <result column="nursing_name" jdbcType="VARCHAR" property="nursingName" />
+    <result column="service_price" jdbcType="REAL" property="servicePrice" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="is_raise" jdbcType="VARCHAR" property="isRaise" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from huli_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lijie.bs_healthy.model.HuliInfo">
+    insert into huli_info (id, work_number, nursing_name, 
+      service_price, description, is_raise, 
+      status, type, create_by, 
+      create_time, update_by, update_time, 
+      is_delete)
+    values (#{id,jdbcType=INTEGER}, #{workNumber,jdbcType=VARCHAR}, #{nursingName,jdbcType=VARCHAR}, 
+      #{servicePrice,jdbcType=REAL}, #{description,jdbcType=VARCHAR}, #{isRaise,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, 
+      #{isDelete,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lijie.bs_healthy.model.HuliInfo">
+    update huli_info
+    set work_number = #{workNumber,jdbcType=VARCHAR},
+      nursing_name = #{nursingName,jdbcType=VARCHAR},
+      service_price = #{servicePrice,jdbcType=REAL},
+      description = #{description,jdbcType=VARCHAR},
+      is_raise = #{isRaise,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=DATE},
+      is_delete = #{isDelete,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, work_number, nursing_name, service_price, description, is_raise, status, 
+    type, create_by, create_time, update_by, update_time, is_delete
+    from huli_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, work_number, nursing_name, service_price, description, is_raise, status, 
+    type, create_by, create_time, update_by, update_time, is_delete
+    from huli_info where status='启用'
+  </select>
+
+  <select id="queryAll" parameterType="com.lijie.bs_healthy.model.HuliInfo" resultMap="BaseResultMap">
+    select id, work_number, nursing_name, service_price, description, is_raise, status,
+    type, create_by, create_time, update_by, update_time, is_delete
+    from huli_info
+    <where>
+    <if test="nursingName != null and nursingName != ''">
+      and nursing_name like concat(#{nursingName},'%')
+    </if>
+    <if test="workNumber != null and workNumber != ''">
+      and work_number = #{workNumber}
+    </if>
+      <if test="isRaise != null and isRaise != ''">
+        and is_raise = #{isRaise}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lijie.bs_healthy.mapper.BedInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lijie.bs_healthy.model.BedInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="community" jdbcType="VARCHAR" property="community" />
+    <result column="building" jdbcType="INTEGER" property="building" />
+    <result column="floor" jdbcType="INTEGER" property="floor" />
+    <result column="room" jdbcType="INTEGER" property="room" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="crate_date" jdbcType="TIMESTAMP" property="crateDate" />
+  </resultMap>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bed_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lijie.bs_healthy.model.BedInfo">
+    insert into bed_info (id, community, building, 
+      floor, room, cust_name,
+      state, crate_date)
+    values (#{id,jdbcType=INTEGER}, #{community,jdbcType=VARCHAR}, #{building,jdbcType=INTEGER}, 
+      #{floor,jdbcType=INTEGER}, #{room,jdbcType=INTEGER}, #{custName,jdbcType=VARCHAR},
+      #{state,jdbcType=VARCHAR}, #{crateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lijie.bs_healthy.model.BedInfo">
+    update bed_info
+    set community = #{community,jdbcType=VARCHAR},
+      building = #{building,jdbcType=INTEGER},
+      floor = #{floor,jdbcType=INTEGER},
+      room = #{room,jdbcType=INTEGER},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      crate_date = #{crateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, community, building, floor, room, cust_name, state, crate_date
+    from bed_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, community, building, floor, room, cust_name, state, crate_date
+    from bed_info
+  </select>
+  <select id="selectByState" resultMap="BaseResultMap">
+    select id, community, building, floor, room, cust_name, state, crate_date
+    from bed_info where state = '0'
+  </select>
+</mapper>

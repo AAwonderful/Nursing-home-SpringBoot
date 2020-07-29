@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lijie.bs_healthy.mapper.CheckinInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lijie.bs_healthy.model.CheckinInfo">
+    <id column="cust_id" jdbcType="INTEGER" property="custId" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="cust_age" jdbcType="VARCHAR" property="custAge" />
+    <result column="cust_sex" jdbcType="VARCHAR" property="custSex" />
+    <result column="cust_idcard" jdbcType="VARCHAR" property="custIdcard" />
+    <result column="bed_id" jdbcType="INTEGER" property="bedId" />
+    <result column="checkin_time" jdbcType="TIMESTAMP" property="checkinTime" />
+    <result column="timeout" jdbcType="TIMESTAMP" property="timeout" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="birthDate" jdbcType="DATE" property="birthdate" />
+    <result column="cust_tall" jdbcType="VARCHAR" property="custTall" />
+    <result column="cust_marry" jdbcType="VARCHAR" property="custMarry" />
+    <result column="cust_weight" jdbcType="DOUBLE" property="custWeight" />
+    <result column="cust_blood" jdbcType="VARCHAR" property="custBlood" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
+    <result column="tips" jdbcType="VARCHAR" property="tips" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from checkin_info
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lijie.bs_healthy.model.CheckinInfo">
+    insert into checkin_info (cust_id, cust_name, cust_age, 
+      cust_sex, cust_idcard, bed_id, 
+      checkin_time, timeout, phone, 
+      birthDate, cust_tall, cust_marry, 
+      cust_weight, cust_blood, photo, 
+      tips)
+    values (#{custId,jdbcType=INTEGER}, #{custName,jdbcType=VARCHAR}, #{custAge,jdbcType=VARCHAR}, 
+      #{custSex,jdbcType=VARCHAR}, #{custIdcard,jdbcType=VARCHAR}, #{bedId,jdbcType=INTEGER},
+      #{checkinTime,jdbcType=TIMESTAMP}, #{timeout,jdbcType=TIMESTAMP}, #{phone,jdbcType=VARCHAR}, 
+      #{birthdate,jdbcType=DATE}, #{custTall,jdbcType=VARCHAR}, #{custMarry,jdbcType=VARCHAR}, 
+      #{custWeight,jdbcType=DOUBLE}, #{custBlood,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}, 
+      #{tips,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lijie.bs_healthy.model.CheckinInfo">
+    update checkin_info
+    set cust_name = #{custName,jdbcType=VARCHAR},
+      cust_age = #{custAge,jdbcType=VARCHAR},
+      cust_sex = #{custSex,jdbcType=VARCHAR},
+      cust_idcard = #{custIdcard,jdbcType=VARCHAR},
+      bed_id = #{bedId,jdbcType=INTEGER},
+      checkin_time = #{checkinTime,jdbcType=TIMESTAMP},
+      timeout = #{timeout,jdbcType=TIMESTAMP},
+      phone = #{phone,jdbcType=VARCHAR},
+      birthDate = #{birthdate,jdbcType=DATE},
+      cust_tall = #{custTall,jdbcType=VARCHAR},
+      cust_marry = #{custMarry,jdbcType=VARCHAR},
+      cust_weight = #{custWeight,jdbcType=DOUBLE},
+      cust_blood = #{custBlood,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR}
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select cust_id, cust_name, cust_age, cust_sex, cust_idcard, bed_id, checkin_time, 
+    timeout, phone, birthDate, cust_tall, cust_marry, cust_weight, cust_blood, photo, 
+    tips
+    from checkin_info
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select cust_id, cust_name, cust_age, cust_sex, cust_idcard, bed_id, checkin_time, 
+    timeout, phone, birthDate, cust_tall, cust_marry, cust_weight, cust_blood, photo, 
+    tips
+    from checkin_info
+    <where>
+      <if test="custName != null and custName != ''">
+        and cust_name like concat(#{custName},'%')
+      </if>
+    </where>
+  </select>
+
+</mapper>

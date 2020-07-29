@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lijie.bs_healthy.mapper.NurseInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lijie.bs_healthy.model.NurseInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nurse_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lijie.bs_healthy.model.NurseInfo">
+    insert into nurse_info (id, create_time, create_by, 
+      update_time, update_by, is_deleted, 
+      username, password, sex, 
+      email, phone_number, number, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{createBy,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=DATE}, #{updateBy,jdbcType=INTEGER}, #{isDeleted,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lijie.bs_healthy.model.NurseInfo">
+    update nurse_info
+    set create_time = #{createTime,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, create_time, create_by, update_time, update_by, is_deleted, username, 
+    password, sex, email, phone_number, number, type
+    from nurse_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, create_time, create_by, update_time, update_by, is_deleted, username, 
+    password, sex, email, phone_number, number, type
+    from nurse_info
+  </select>
+
+  <select id="selectByname" parameterType="com.lijie.bs_healthy.model.NurseInfo" resultMap="BaseResultMap">
+  select id, create_time, create_by, update_time, update_by, is_deleted, username,
+    password, sex, email, phone_number, number, type
+    from nurse_info where username = #{username} and password=#{password}
+  </select>
+
+  <select id="queryAll" parameterType="com.lijie.bs_healthy.model.NurseInfo" resultMap="BaseResultMap">
+  select id, create_time, create_by, update_time, update_by, is_deleted, username,
+    password, sex, email, phone_number, number, type
+    from nurse_info
+    <where>
+    <if test="username != null and username != ''">
+      and username like concat(#{username},'%')
+    </if>
+    <if test="sex != null and sex != ''">
+      and sex = #{sex}
+    </if>
+  </where>
+  </select>
+</mapper>

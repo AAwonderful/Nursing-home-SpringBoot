@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lijie.bs_healthy.mapper.FoodCalendarMapper">
+    <!--根据用户id查询所有餐食，-->
+    <select id="selAll" parameterType="int" resultType="com.lijie.bs_healthy.model.FoodCalendarInfo">
+        select * from food_calendar where clientid=#{clientid}
+    </select>
+
+    <select id="selByone" parameterType="int" resultType="com.lijie.bs_healthy.model.FoodCalendarInfo">
+        select *from food where clientid=#{clientid} and date=#{date}
+    </select>
+
+    <insert id="add" parameterType="com.lijie.bs_healthy.model.FoodCalendarInfo">
+        insert into food_calendar(clientid,breakfast,lunch,dinner,date)
+         values (#{clientid},#{breakfast},#{lunch},#{dinner},#{date})
+    </insert>
+
+    <!--更新，只能更新food -->
+    <update id="update" parameterType="com.lijie.bs_healthy.model.FoodCalendarInfo">
+        update food_calendar set breakfast=#{breakfast},lunch=#{lunch},dinner=#{dinner}
+        where clientid=#{clientid} and date=#{date}
+    </update>
+
+    <delete id="del" parameterType="com.lijie.bs_healthy.model.FoodCalendarInfo">
+        delete from food_calendar where clientid=#{clientid} and date=#{date}
+    </delete>
+
+    <!--查询某天的餐食记录-->
+    <select id="selByDate" parameterType="com.lijie.bs_healthy.model.FoodCalendarInfo" resultType="com.lijie.bs_healthy.model.FoodCalendarInfo">
+        select * from food_calendar where clientid=#{clientid} and date=#{date}
+    </select>
+</mapper>

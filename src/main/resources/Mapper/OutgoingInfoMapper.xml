@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lijie.bs_healthy.mapper.OutgoingInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lijie.bs_healthy.model.OutgoingInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cust_id" jdbcType="INTEGER" property="custId" />
+    <result column="out_season" jdbcType="VARCHAR" property="outSeason" />
+    <result column="out_time" jdbcType="TIMESTAMP" property="outTime" />
+    <result column="back_time" jdbcType="TIMESTAMP" property="backTime" />
+    <result column="accompany" jdbcType="VARCHAR" property="accompany" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="accompany_phone" jdbcType="VARCHAR" property="accompanyPhone" />
+    <result column="tips" jdbcType="VARCHAR" property="tips" />
+    <result column="realback_time" jdbcType="TIMESTAMP" property="realbackTime" />
+    <result column="ischeck" jdbcType="VARCHAR" property="ischeck" />
+    <result column="isback" jdbcType="VARCHAR" property="isback" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from outgoing_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lijie.bs_healthy.model.OutgoingInfo">
+    insert into outgoing_info (id, cust_id, out_season, 
+      out_time, back_time, accompany, 
+      relation, accompany_phone, tips, 
+      realback_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{outSeason,jdbcType=VARCHAR}, 
+      #{outTime,jdbcType=TIMESTAMP}, #{backTime,jdbcType=TIMESTAMP}, #{accompany,jdbcType=VARCHAR}, 
+      #{relation,jdbcType=VARCHAR}, #{accompanyPhone,jdbcType=VARCHAR}, #{tips,jdbcType=VARCHAR}, 
+      #{realbackTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lijie.bs_healthy.model.OutgoingInfo">
+    update outgoing_info
+    set cust_id = #{custId,jdbcType=INTEGER},
+      out_season = #{outSeason,jdbcType=VARCHAR},
+      out_time = #{outTime,jdbcType=TIMESTAMP},
+      back_time = #{backTime,jdbcType=TIMESTAMP},
+      accompany = #{accompany,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=VARCHAR},
+      accompany_phone = #{accompanyPhone,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR},
+      realback_time = #{realbackTime,jdbcType=TIMESTAMP},
+      ischeck = #{ischeck,jdbcType=VARCHAR},
+      isback = #{isback,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, cust_id, out_season, out_time, back_time, accompany, relation, accompany_phone, 
+    tips, realback_time, ischeck, isback
+    from outgoing_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, cust_id, out_season, out_time, back_time, accompany, relation, accompany_phone, 
+    tips, realback_time, ischeck, isback
+    from outgoing_info
+  </select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lijie.bs_healthy.mapper.HuliServiceInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lijie.bs_healthy.model.HuliServiceInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cust_id" jdbcType="INTEGER" property="custId" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="nurse_id" jdbcType="INTEGER" property="nurseId" />
+    <result column="nurse_name" jdbcType="VARCHAR" property="nurseName" />
+    <result column="begin_time" jdbcType="DATE" property="beginTime" />
+    <result column="end_time" jdbcType="DATE" property="endTime" />
+    <result column="money" jdbcType="REAL" property="money" />
+    <result column="service_id" jdbcType="INTEGER" property="serviceId" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hlservice_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lijie.bs_healthy.model.HuliServiceInfo">
+    insert into hlservice_info (id, cust_id, cust_name, 
+      nurse_id, nurse_name, begin_time, 
+      end_time, money, service_id, 
+      service_name)
+    values (#{id,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{custName,jdbcType=VARCHAR}, 
+      #{nurseId,jdbcType=INTEGER}, #{nurseName,jdbcType=VARCHAR}, #{beginTime,jdbcType=DATE}, 
+      #{endTime,jdbcType=DATE}, #{money,jdbcType=REAL}, #{serviceId,jdbcType=INTEGER}, 
+      #{serviceName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lijie.bs_healthy.model.HuliServiceInfo">
+    update hlservice_info
+    set cust_id = #{custId,jdbcType=INTEGER},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      nurse_id = #{nurseId,jdbcType=INTEGER},
+      nurse_name = #{nurseName,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=DATE},
+      end_time = #{endTime,jdbcType=DATE},
+      money = #{money,jdbcType=REAL},
+      service_id = #{serviceId,jdbcType=INTEGER},
+      service_name = #{serviceName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, cust_id, cust_name, nurse_id, nurse_name, begin_time, end_time, money, 
+    service_id, service_name
+    from hlservice_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, cust_id, cust_name, nurse_id, nurse_name, begin_time, end_time, money,
+    service_id, service_name
+    from hlservice_info
+  </select>
+
+  <select id="queryAll" parameterType="com.lijie.bs_healthy.model.HuliServiceInfo" resultMap="BaseResultMap">
+    select id, cust_id, cust_name, nurse_id, nurse_name, begin_time, end_time, money,
+    service_id, service_name
+    from hlservice_info
+    <where>
+      <if test="custName != null and custName != ''">
+        and cust_name like concat(#{custName},'%')
+      </if>
+      <if test="nurseName != null and nurseName != ''">
+        and nurse_name like concat(#{nurseName},'%')
+      </if>
+      <if test="serviceName != null and serviceName != ''">
+        and service_name like concat(#{serviceName},'%')
+      </if>
+    </where>
+  </select>
+</mapper>
